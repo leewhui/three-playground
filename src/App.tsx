@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { changeCode, changeCurrentFile } from './store/project/project';
 import { Tabs } from '@mantine/core';
 import { getLanguage } from './util';
+import styles from './app.module.less';
 
 function App() {
 	const state = useSelector(getState);
@@ -21,11 +22,11 @@ function App() {
 	};
 
 	return (
-		<div style={{ width: '100%', height: '100vh', display: 'flex', overflow: 'hidden' }}>
+		<div className={styles['container']}>
 			<div style={{ width: '50%' }}>
 				<Tabs value={state.currentFile} onTabChange={onChangeCurrentFile}>
 					<Tabs.List>
-						<Tabs.Tab value={state.files['index.ts'].filename}>index.ts</Tabs.Tab>
+						<Tabs.Tab value={state.files['index.js'].filename}>index.js</Tabs.Tab>
 					</Tabs.List>
 				</Tabs>
 				<CodeEditor value={currentFile.code} onChange={onChangeCode} lang={getLanguage(currentFile.filename)} />

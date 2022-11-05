@@ -2,7 +2,7 @@ import { Notification } from '@mantine/core';
 import { useDebounceFn } from 'ahooks';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { StateInterface } from '../../type';
-import { getImportedMap } from '../../util';
+import { getImportedMap, setHash } from '../../util';
 import { PreviewProxy } from './previewProxy';
 import srcdoc from './srcdoc.html?raw';
 import styles from './preview.module.less';
@@ -31,6 +31,7 @@ export const Preview: FC<PreviewInterface> = (props) => {
 		() => {
 			if (!previewProxy || !previewProxy.current) return;
 			setErrorMessage(null);
+      setHash(state.files);
 			previewProxy.current.eval(state.files[state.mainFile].code);
 		},
 		{ wait: 250 }

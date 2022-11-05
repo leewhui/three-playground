@@ -28,7 +28,7 @@ export const getImportedMap = (files: Record<string, FileInterface>) => {
 }
 
 export const getLanguage = (filename: string) => {
-  if (filename.endsWith('.ts')) return 'typescript';
+  if (filename.endsWith('.js')) return 'javascript';
   if (filename.endsWith('.html')) return 'html';
   return '';
 }
@@ -36,9 +36,9 @@ export const getLanguage = (filename: string) => {
 export const setFromSerializedState = (serializedState: string) => {
   const files = initState(serializedState);
   return {
-    mainFile: 'index.ts',
+    mainFile: 'index.js',
     files,
-    currentFile: 'index.ts',
+    currentFile: 'index.js',
     error: [],
   }
 }
@@ -52,9 +52,9 @@ const initState = (serializedState: string) => {
     }
   }
 
-  if (!files['index.ts']) {
-    const file = createFileState('index.ts', default_three.trim());
-    files['index.ts'] = file;
+  if (!files['index.js']) {
+    const file = createFileState('index.js', default_three.trim());
+    files['index.js'] = file;
   }
 
   if (!files['import-map.json']) {
@@ -63,4 +63,13 @@ const initState = (serializedState: string) => {
     }))
   }
   return files;
+}
+
+export const setHash = (files: Record<string, FileInterface>) => {
+  const exported: Record<string, string> = {};
+  for (const filename in files) {
+    exported[filename] = files[filename].code
+  }
+  const hash = '#' + utoa(JSON.stringify(exported))
+  location.hash = hash;
 }
