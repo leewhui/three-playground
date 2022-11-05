@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setFromSerializedState } from '../../hooks/useLoadFromHash';
 import { StateInterface } from '../../type'
+import { setFromSerializedState } from '../../util';
 import { changeCodeAction, changeCurrentFileAction, changeStateAction } from './reducer'
 
 const hash = location.hash.substr(1);
